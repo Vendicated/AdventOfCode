@@ -12,7 +12,7 @@ I want to use a different language each day
 - [ ] kotlin
 - [ ] java
 - [ ] c++
-- [x] c
+- [x] c: Day 1
 - [ ] c#
 - [ ] bash
 - [ ] awk
@@ -23,7 +23,7 @@ I want to use a different language each day
 - [ ] lua
 - [ ] dart
 - [ ] php
-- [ ] sql (maybe if not too hard)
+- [x] sql: Day 2
 - [ ] perl
 - [ ] powershell (core)
 - [ ] Swift (does this even have a compiler for linux?? I hope so)
