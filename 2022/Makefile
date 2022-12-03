@@ -10,3 +10,6 @@ day2:
 	CREATE TEMP TABLE filenames(name Text);\
 	INSERT INTO filenames VALUES('day2/example.txt'), ('day2/input.txt');\
 	"
+
+day3:
+	pwsh day3/solution.ps1 day3/example.txt day3/input.txt
