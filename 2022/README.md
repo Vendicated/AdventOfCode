@@ -14,7 +14,7 @@ I want to use a different language each day
 - [ ] c++
 - [x] c: Day 1
 - [ ] c#
-- [ ] bash
+- [x] bash
 - [ ] awk
 - [ ] nim
 - [ ] go

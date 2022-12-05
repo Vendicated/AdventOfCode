@@ -13,3 +13,6 @@ day2:
 
 day3:
 	pwsh day3/solution.ps1 day3/example.txt day3/input.txt
+
+day4:
+	bash day4/solution.bash day4/example.txt day4/input.txt
