@@ -24,7 +24,7 @@ I want to use a different language each day
 - [ ] dart
 - [ ] php
 - [x] sql: Day 2
-- [ ] perl
+- [x] perl
 - [x] powershell (core): Day 3
 - [ ] Swift (does this even have a compiler for linux?? I hope so)
 - [ ] ?
