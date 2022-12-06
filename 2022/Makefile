@@ -17,3 +17,5 @@ day4:
 	bash day4/solution.bash day4/example.txt day4/input.txt
 day5:
 	perl day5/solution.perl day5/example.txt day5/input.txt
+day6:
+	nim compile --out=build/day6 --run day6/solution.nim day6/example.txt day6/input.txt

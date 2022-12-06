@@ -4,6 +4,12 @@ I want to use a different language each day
 
 ## Languages
 
+- [x] c: Day 1
+- [x] sql: Day 2
+- [x] powershell (core): Day 3
+- [x] bash: Day 4
+- [x] perl: Day 5
+- [x] nim: Day 6
 - [ ] rust
 - [ ] vlang
 - [ ] zig
@@ -12,19 +18,13 @@ I want to use a different language each day
 - [ ] kotlin
 - [ ] java
 - [ ] c++
-- [x] c: Day 1
 - [ ] c#
-- [x] bash
 - [ ] awk
-- [ ] nim
 - [ ] go
 - [ ] ruby
 - [ ] crystal
 - [ ] lua
 - [ ] dart
 - [ ] php
-- [x] sql: Day 2
-- [x] perl
-- [x] powershell (core): Day 3
 - [ ] Swift (does this even have a compiler for linux?? I hope so)
 - [ ] ?
