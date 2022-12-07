@@ -10,6 +10,7 @@ I want to use a different language each day
 - [x] bash: Day 4
 - [x] perl: Day 5
 - [x] nim: Day 6
+- [x] go: Day 7
 - [ ] rust
 - [ ] vlang
 - [ ] zig
@@ -20,7 +21,6 @@ I want to use a different language each day
 - [ ] c++
 - [ ] c#
 - [ ] awk
-- [ ] go
 - [ ] ruby
 - [ ] crystal
 - [ ] lua
