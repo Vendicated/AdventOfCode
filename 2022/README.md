@@ -11,8 +11,8 @@ I want to use a different language each day
 - [x] perl: Day 5
 - [x] nim: Day 6
 - [x] go: Day 7
+- [x] v: Day 8
 - [ ] rust
-- [ ] vlang
 - [ ] zig
 - [ ] js
 - [ ] python
