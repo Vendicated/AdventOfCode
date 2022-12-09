@@ -23,3 +23,5 @@ day7:
 	go run day7/solution.go day7/example.txt day7/input.txt
 day8:
 	v run day8/solution.v day8/example.txt day8/input.txt
+day9:
+	swift day9/solution.swift day9/example.txt day9/input.txt
