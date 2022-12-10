@@ -16,13 +16,13 @@ a lot of the languages on the fly without ever having used them before)
 - [x] go: Day 7
 - [x] v: Day 8 (cool language but holy cow is the language server bad)
 - [x] swift: Day 9 (wow this language is actually very nice good job apple)
+- [x] c++: Day 10
 - [ ] rust
 - [ ] zig
 - [ ] js
 - [ ] python
 - [ ] kotlin
 - [ ] java
-- [ ] c++
 - [ ] c#
 - [ ] awk
 - [ ] ruby
