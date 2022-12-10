@@ -1,5 +1,3 @@
-.PHONY: all $(MAKECMDGOALS)
-
 day1:
 	gcc day1/main.c -o build/1 -g -Wall -fsanitize=address
 	build/1 day1/example.txt
@@ -25,3 +23,6 @@ day8:
 	v run day8/solution.v day8/example.txt day8/input.txt
 day9:
 	swift day9/solution.swift day9/example.txt day9/input.txt
+day10:
+	g++ day10/solution.cc -o build/10 -g -Wall
+	build/10 day10/example.txt day10/input.txt
