@@ -24,10 +24,10 @@ a lot of the languages on the fly without ever having used them before)
 - [ ] kotlin
 - [ ] java
 - [ ] c#
-- [ ] awk
+- [ ] elixir
 - [ ] ruby
 - [ ] crystal
 - [ ] lua
 - [ ] dart
 - [ ] php
-- [ ] ?
+- [ ] scala
