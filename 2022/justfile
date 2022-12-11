@@ -26,3 +26,6 @@ day9:
 day10:
 	g++ day10/solution.cc -o build/10 -g -Wall
 	build/10 day10/example.txt day10/input.txt
+day11:
+	cargo run --manifest-path day11/Cargo.toml 1 day11/*.txt
+	cargo run --manifest-path day11/Cargo.toml 2 day11/*.txt
