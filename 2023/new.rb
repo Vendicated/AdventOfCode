@@ -6,7 +6,7 @@ day = ARGV[0]
 
 res = Net::HTTP.get URI("https://adventofcode.com/2023/day/#{day}/input"), { 
     "Cookie" => ENV["AOC_COOKIE"],
-    "User-Agent" => "https://codeberg.org/Ven/AdventOfCode <vendicated@riseup.net>"
+    "User-Agent" => "https://codeberg.org/Ven/AdventOfCode <vendicated+aoc@riseup.net>"
 }
 
 folder = "day#{day}"
