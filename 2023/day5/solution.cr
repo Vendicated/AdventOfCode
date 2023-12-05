@@ -37,10 +37,6 @@ def solve(file)
   puts smallest_location_number
 end
 
-def assert(condition)
-  raise "assertion failed" unless condition
-end
-
 def solve2(file)
   smallest_location_number = UInt64::MAX
 
