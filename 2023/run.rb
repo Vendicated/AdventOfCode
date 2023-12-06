@@ -1,3 +1,13 @@
 day = "day#{ARGV[0]}"
 
-system "ruby solution.rb", :chdir => day
+commands = {
+    "cr" => "crystal",
+    "rb" => "ruby"
+}
+
+for ext, command in commands.entries do
+    filename = "solution.#{ext}"
+    next unless File.exist? "#{day}/#{filename}"
+
+    system "#{command} #{filename}", :chdir => day
+end
