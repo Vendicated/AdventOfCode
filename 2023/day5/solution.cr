@@ -43,53 +43,67 @@ def solve2(file)
   lines = File.read_lines(file)
   seeds = lines.shift.split(":").last.strip.split(" ").map { |s| s.to_u64 }
 
+  mappings = [] of Array(Array(UInt64))
+  chunk = [] of Array(UInt64)
+  lines.skip(1).each do |line|
+    next if line.ends_with? "map:"
+    if line.empty?
+      mappings << chunk
+      chunk = [] of Array(UInt64)
+      next
+    end
+
+    chunk << line.split(" ").map { |s| s.to_u64 }
+  end
+  mappings << chunk
+
   (0...seeds.size).step(by: 2) do |i|
     unmapped_ranges = [{seeds[i], seeds[i] + seeds[i + 1] - 1}]
     mapped_ranges = [] of Tuple(UInt64, UInt64)
 
-    lines.each do |line|
-      if line.empty? || line.ends_with? "map:"
-        unmapped_ranges += mapped_ranges
-        mapped_ranges = [] of Tuple(UInt64, UInt64)
-        next
-      end
+    mappings.each do |mapping|
+      unmapped_ranges += mapped_ranges
+      mapped_ranges = [] of Tuple(UInt64, UInt64)
 
-      dest_range_start, source_range_start, range_length = line.split(" ").map { |s| s.to_u64 }
+      mapping.each do |map_line|
+        dest_range_start, source_range_start, range_length = map_line
 
-      map_start = source_range_start
-      map_end = source_range_start + range_length - 1
+        map_start = source_range_start
+        map_end = source_range_start + range_length - 1
 
-      unmapped_ranges.clone.each do |range|
-        seed_start, seed_end = range
-        next if seed_start > map_end || seed_end < map_start
+        len = unmapped_ranges.size
+        unmapped_ranges.clone.reverse_each.with_index do |range, idx|
+          seed_start, seed_end = range
+          next if seed_start > map_end || seed_end < map_start
 
-        unmapped_ranges.delete range
+          unmapped_ranges.delete_at len - 1 - idx
 
-        # if the left side of the seed is fully contained in the map
-        if seed_start >= map_start
-          new_start = dest_range_start + (seed_start - map_start)
+          # if the left side of the seed is fully contained in the map
+          if seed_start >= map_start
+            new_start = dest_range_start + (seed_start - map_start)
 
-          # if the seed is fully contained in the map
-          if map_end >= seed_end
-            mapped_ranges << {new_start, dest_range_start + (seed_end - map_start)}
+            # if the seed is fully contained in the map
+            if map_end >= seed_end
+              mapped_ranges << {new_start, dest_range_start + (seed_end - map_start)}
+            else
+              mapped_ranges << {new_start, dest_range_start + (map_end - map_start)}
+              unmapped_ranges << {map_end + 1, seed_end}
+            end
+
+            # if the left side of the seed is not fully contained
           else
-            mapped_ranges << {new_start, dest_range_start + (map_end - map_start)}
-            unmapped_ranges << {map_end + 1, seed_end}
-          end
+            unmapped_ranges << {seed_start, map_start - 1}
+            new_start = dest_range_start
 
-          # if the left side of the seed is not fully contained
-        else
-          unmapped_ranges << {seed_start, map_start - 1}
-          new_start = dest_range_start
+            # if the right side is fully contained
+            if map_end >= seed_end
+              mapped_ranges << {new_start, dest_range_start + (seed_end - map_start)}
 
-          # if the right side is fully contained
-          if map_end >= seed_end
-            mapped_ranges << {new_start, dest_range_start + (seed_end - map_start)}
-
-            # if neither sides of the seed are fully contained
-          else
-            mapped_ranges << {new_start, dest_range_start + (map_end - map_start)}
-            unmapped_ranges << {map_end + 1, seed_end}
+              # if neither sides of the seed are fully contained
+            else
+              mapped_ranges << {new_start, dest_range_start + (map_end - map_start)}
+              unmapped_ranges << {map_end + 1, seed_end}
+            end
           end
         end
       end
