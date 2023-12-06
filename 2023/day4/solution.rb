@@ -5,10 +5,11 @@ end
 def solve file
     points = 0
 
-    cardsWon = []
+    cardsWon = 0
+    cardsWonBuf = []
 
-    File.foreach(file).with_index do |line, idx|
-        cardsWon[idx] ||= 1
+    File.foreach(file).each do |line|
+        cardsWonBuf[0] ||= 1
 
         left, right = line.split " | "
 
@@ -16,19 +17,28 @@ def solve file
         owned = parseNums right
 
         winningCardCount = owned.count { |n| winning.include? n }
-        next if winningCardCount == 0
+        if winningCardCount == 0
+            cardsWon += cardsWonBuf.shift
+            next
+        end
 
         for i in 1..winningCardCount do
-            cardsWon[idx + i] ||= 1
-            cardsWon[idx + i] += cardsWon[idx]
+            cardsWonBuf[i] ||= 1
+            cardsWonBuf[i] += cardsWonBuf[0]
         end
 
         points += 2 ** (winningCardCount - 1)
+
+        cardsWon += cardsWonBuf.shift
     end
 
-    puts file, points, cardsWon.reduce { |a, b| a + b }
+    puts file, points, cardsWon
 end
 
 solve "example.txt"
 puts
 solve "input.txt"
+puts
+solve "input-100k.txt"
+puts
+solve "input-1m.txt"
