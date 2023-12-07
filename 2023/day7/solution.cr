@@ -66,20 +66,26 @@ class Hand2 < Hand
     frequency_map = cards.chars.tally
     jokers = frequency_map['J']
 
-    frequencies = frequency_map.values
+    frequencies = frequency_map.reject('J').values.sort! { |a, b| b <=> a }
 
     has_pair = frequencies.any? { |n| n >= 2 - jokers }
     has_triple = frequencies.any? { |n| n >= 3 - jokers }
     has_quadruple = frequencies.any? { |n| n >= 4 - jokers }
-    has_quintuple = frequencies.any? { |n| n >= 5 - jokers }
+    has_quintuple = jokers == 5 || frequencies.any? { |n| n >= 5 - jokers }
 
     return HandType::FiveOfAKind if has_quintuple
     return HandType::FourOfAKind if has_quadruple
-    return HandType::FullHouse if has_pair && has_triple
+    if has_triple
+      jokers_used = [0, 3 - frequencies[0]].max
+      jokers_left = jokers - jokers_used
+      return HandType::FullHouse if frequencies[1] >= 2 - jokers_left
+    end
     return HandType::ThreeOfAKind if has_triple
     return HandType::HighCard unless has_pair
 
-    return frequencies.count { |n| n >= 2 - jokers } == 2 ? HandType::TwoPair : HandType::OnePair
+    jokers_used = [0, 2 - frequencies[0]].max
+    jokers_left = jokers - jokers_used
+    return frequencies[1] >= 2 - jokers_left ? HandType::TwoPair : HandType::OnePair
   end
 end
 
