@@ -105,6 +105,9 @@ def solve2(instructions : String, map : Hash(String, Tuple(String, String)))
   end
 
   puts lowest_common_end
+
+  # LCM solution
+  # puts start_nodes_end_steps.reduce(1_i64) { |acc, curr| acc.lcm curr[0][0] }
 end
 
 solve "example.txt"
