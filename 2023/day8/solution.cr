@@ -10,7 +10,7 @@ def solve(file : String)
   end
 
   puts file
-  # solve1 instructions, map
+  solve1 instructions, map
   solve2 instructions, map
 end
 
@@ -31,9 +31,7 @@ def solve1(instructions : String, map : Hash(String, Tuple(String, String)))
 end
 
 def find_step_count_til_cycle(node : String, instructions : String, map : Hash(String, Tuple(String, String))) : Int64
-  steps = 0_i64
-  steps_total = 0_i64
-  last_steps = 0_i64
+  steps = steps_total = last_steps = 0_i64
   curr_node = node
 
   loop do
@@ -80,10 +78,19 @@ def solve2(instructions : String, map : Hash(String, Tuple(String, String)))
     end
   end
 
+  # the input is made for LCM. however, my solution is made to cover all inputs.
+  # for each starting node, i first find the reachable end node(s) and how many steps (x) are needed to get there
+  # for each end node, i calculate how many steps are needed to loop back to the same end node (y)
+  # (in the case of the AOC input, x = y, hence why LCM works)
+  # now that we have this info, we just need to take the first starting node (x_1), and calculate how often
+  # we need to add the corresponding loop step count (y_1) to it, until the difference between x_1 and all
+  # other starting nodes (x_n) is divisable by the loop step count of those nodes (y_n).
+  # supposedly this is solvable mathematically via the "chinese remainder theorem" (of which i have never heard of before lol),
+  # but the below brute force approach runs relatively fast (~10s) and is much simpler
+  # to brute force it, the below code just keeps adding y_1 to x_1 until the above specified condition is satisfied
+
   lowest_common_end = Int64::MAX
 
-  # i suck at math so just brute force the common step count.
-  # you can most definitely calculate this properly but lol
   start_nodes_end_steps.first.each do |steps|
     steps_til_end, steps_til_loop = steps
 
@@ -100,6 +107,6 @@ def solve2(instructions : String, map : Hash(String, Tuple(String, String)))
   puts lowest_common_end
 end
 
-solve "example2.txt"
+solve "example.txt"
 puts
 solve "input.txt"
