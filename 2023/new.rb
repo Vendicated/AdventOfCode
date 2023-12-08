@@ -14,8 +14,8 @@ folder = "day#{day}"
 Dir.mkdir folder
 File.write "#{folder}/example.txt", ""
 File.write "#{folder}/input.txt", res
-File.write "#{folder}/solution.rb", %Q(
-def solve file
+File.write "#{folder}/solution.cr", %Q(
+def solve(file : String)
 end
 
 solve "example.txt"
