@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require "dotenv/load"
 
 require "net/http"

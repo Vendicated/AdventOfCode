@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 day = "day#{ARGV[0]}"
 
 commands = {
