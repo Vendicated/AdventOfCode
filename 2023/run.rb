@@ -1,6 +1,8 @@
 #!/usr/bin/ruby
 
-day = "day#{ARGV[0]}"
+require "date"
+
+day = "day#{ARGV[0] || Date.today.day}"
 
 commands = {
     "cr" => "crystal",

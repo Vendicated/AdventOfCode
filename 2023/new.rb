@@ -3,8 +3,9 @@
 require "dotenv/load"
 
 require "net/http"
+require "date"
 
-day = ARGV[0]
+day = ARGV[0] || Date.today.day
 
 res = Net::HTTP.get URI("https://adventofcode.com/2023/day/#{day}/input"), { 
     "Cookie" => ENV["AOC_COOKIE"],
