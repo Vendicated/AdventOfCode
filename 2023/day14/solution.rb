@@ -102,7 +102,7 @@ def solve2(file)
     1000000000.times do |i|
         rotate map
 
-        dump = Marshal.dump(map)
+        dump = map.map &:dup
         if prev_maps.has_key? dump
             rotations_done = i + 1
             cycle_happens_after = i - prev_maps[dump]
