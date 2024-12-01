@@ -3,7 +3,7 @@ def solve(file : String)
 
   left, right = [] of Int32, [] of Int32
 
-  File.read_lines(file).each do |line|
+  File.each_line(file) do |line|
     l, r = line.split
     left << l.to_i
     right << r.to_i
