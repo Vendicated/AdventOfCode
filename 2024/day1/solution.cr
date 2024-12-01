@@ -19,10 +19,9 @@ def solve(file : String)
   puts "Part 1: #{sum}"
 
   occurrences_in_right_list = right.tally
-  similarity_score = 0
 
-  left.each do |x|
-    similarity_score += x * (occurrences_in_right_list[x]? || 0)
+  similarity_score = left.sum do |x|
+    x * (occurrences_in_right_list[x]? || 0)
   end
 
   puts "Part 2: #{similarity_score}"
