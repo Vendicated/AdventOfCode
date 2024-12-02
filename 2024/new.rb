@@ -19,11 +19,24 @@ File.write "#{folder}/example.txt", ""
 File.write "#{folder}/input.txt", res
 
 File.write "#{folder}/solution.cr", %Q(
-def solve(file : String)
-  puts "#{file}:"
+require "../lib/day"
+
+alias Input = Array(String)
+
+class Day#{day} < Day(Input)
+  def parse_input(lines : Array(String)) : Input
+    lines
+  end
+
+  def part1(input) : Printable
+    "TODO"
+  end
+
+  def part2(input) : Printable
+    "TODO"
+  end
 end
 
-solve "example.txt"
-puts
-solve "input.txt"
+Day#{day}.new
+
 ).strip

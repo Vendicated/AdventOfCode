@@ -1,3 +1,5 @@
+require "../lib/day"
+
 def is_level_safe(level : Int32, prev_level : Int32, next_level : Int32)
   prev_diff, next_diff = prev_level - level, level - next_level
 
@@ -14,33 +16,32 @@ def is_report_safe(report : Array(Int32))
   end
 end
 
-def solve(file : String)
-  puts "#{file}:"
+alias Reports = Array(Array(Int32))
 
-  reports = File.read_lines(file).map &.split.map &.to_i
-
-  safe_report_count = reports.count do |r|
-    is_report_safe r
+class Day2 < Day(Reports)
+  def parse_input(lines : Array(String)) : Reports
+    lines.map &.split.map &.to_i
   end
 
-  safe_report_count_with_tolerance = reports.count do |r|
-    if is_report_safe r
-      next true
-    end
-
-    # lazy brute force
-    (0..r.size - 1).any? do |i|
-      new_arr = r.clone
-      new_arr.delete_at i
-
-      is_report_safe new_arr
-    end
+  def part1(input) : Printable
+    input.count { |r| is_report_safe r }
   end
 
-  puts "Part 1: #{safe_report_count}"
-  puts "Part 2: #{safe_report_count_with_tolerance}"
+  def part2(input) : Printable
+    input.count do |r|
+      if is_report_safe r
+        next true
+      end
+
+      # lazy brute force
+      (0..r.size - 1).any? do |i|
+        new_arr = r.clone
+        new_arr.delete_at i
+
+        is_report_safe new_arr
+      end
+    end
+  end
 end
 
-solve "example.txt"
-puts
-solve "input.txt"
+Day2.new
