@@ -7,7 +7,7 @@ require "date"
 
 day = ARGV[0] || Date.today.day
 
-res = Net::HTTP.get URI("https://adventofcode.com/2024/day/#{day}/input"), { 
+res = Net::HTTP.get URI("https://adventofcode.com/2024/day/#{day}/input"), {
     "Cookie" => ENV["AOC_COOKIE"],
     "User-Agent" => "https://github.com/Vendicated/AdventOfCode <vendicated+aoc@riseup.net>"
 }
@@ -20,6 +20,7 @@ File.write "#{folder}/input.txt", res
 
 File.write "#{folder}/solution.cr", %Q(
 def solve(file : String)
+  puts "#{file}:"
 end
 
 solve "example.txt"
