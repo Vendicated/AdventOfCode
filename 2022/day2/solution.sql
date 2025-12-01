@@ -7,7 +7,7 @@
 -- hardcoding the values for each combination feels like cheating but shrug it works
 
 
-SELECT "Part 1";
+SELECT 'Part 1';
 
 SELECT (
 WITH line AS (
@@ -16,7 +16,7 @@ WITH line AS (
   FROM json_each('["' || replace(trim(readfile(file.name)), x'0a', '","') || '"]')
   WHERE value != ''
 )
-SELECT file.name || ": " || SUM(x) FROM (SELECT
+SELECT file.name || ': ' || SUM(x) FROM (SELECT
   (CASE value
     WHEN 'A X' THEN (SELECT 4)
     WHEN 'A Y' THEN (SELECT 8)
@@ -35,7 +35,7 @@ FROM line))
 from filenames as file;
 
 
-SELECT "Part 2";
+SELECT 'Part 2';
 
 SELECT (
 WITH line AS (
@@ -45,7 +45,7 @@ WITH line AS (
 )
 -- x lose y draw z win
 -- 0 3 6
-SELECT file.name || ": " || SUM(x) FROM (SELECT
+SELECT file.name || ': ' || SUM(x) FROM (SELECT
   (CASE value
     WHEN 'A X' THEN (SELECT 3)
     WHEN 'A Y' THEN (SELECT 4)
