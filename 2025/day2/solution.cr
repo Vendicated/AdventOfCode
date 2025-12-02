@@ -2,8 +2,8 @@ require "../lib/day"
 
 alias Input = Array(String)
 
-def digit_count(x : Int64)
-  1 + Math.log10(x).floor.to_i64
+def digit_count(x : Int64) : Int64
+  1i64 + Math.log10(x).floor.to_i64
 end
 
 class Day2 < Day(Input)
@@ -14,15 +14,18 @@ class Day2 < Day(Input)
   def part1(input) : Printable
     invalid_sum = 0i64
     input.each do |range|
-      range_start, range_end = range.split '-'
+      start, finish = range.split('-', 2).map &.to_i64
 
-      (range_start.to_i64..range_end.to_i64).each do |n|
+      (start..finish).each do |n|
         digits = digit_count n
-        next if digits % 2 != 0
+        next if digits % 2i64 != 0i64
 
-        left, right = n.divmod(10 ** (digits // 2))
+        divisor = 10i64 ** (digits // 2i64)
+        left, right = n.divmod(divisor)
 
-        invalid_sum += n if left == right
+        if left == right
+          invalid_sum += n
+        end
       end
     end
 
@@ -33,20 +36,23 @@ class Day2 < Day(Input)
     invalid_sum = 0i64
 
     input.each do |range|
-      range_start, range_end = range.split '-'
+      range_start, range_end = range.split('-', 2)
+      start = range_start.to_i64
+      finish = range_end.to_i64
 
-      (range_start.to_i64..range_end.to_i64).each do |n|
+      (start..finish).each do |n|
         digits = digit_count n
 
-        (1..digits // 2).each do |i|
-          times_included = digits / i
-          next if times_included % 1 != 0
+        (1i64..digits // 2i64).each do |i|
+          next if digits % i != 0i64
+          times_included = digits // i
 
-          rest, left = n.divmod(10 ** i)
+          divisor = 10i64 ** i
+          rest, left = n.divmod(divisor)
 
           is_symmetric = true
-          (times_included.to_i - 1).times do
-            rest, x = rest.divmod(10 ** i)
+          (times_included - 1i64).times do
+            rest, x = rest.divmod(divisor)
             if x != left
               is_symmetric = false
               break
