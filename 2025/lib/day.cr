@@ -1,16 +1,17 @@
-alias Printable = String | Int32
+alias Printable = String | Int32 | Int64
 
 def format_time_span(span : Time::Span)
-  amounts = [
-    {span.minutes, "m"},
-    {span.seconds, "s"},
-    {span.microseconds, "µs"},
-  ]
+  secs = span.to_f
+  millis = span.total_milliseconds
+  micros = span.total_microseconds
 
-  amounts
-    .select { |a| a[0] > 0 }
-    .map { |a| a.join "" }
-    .join " "
+  if secs >= 0.1
+    "#{sprintf("%.2f", secs)}s"
+  elsif secs >= 0.001
+    "#{millis}ms"
+  else
+    "#{micros}µs"
+  end
 end
 
 abstract class Day(T)
