@@ -2,8 +2,31 @@ require "../lib/day"
 
 alias Input = Array(String)
 
-def digit_count(x : Int64) : Int64
-  1i64 + Math.log10(x).floor.to_i64
+# PEAK optimisation (log10 is SLOOOOOW)
+def digit_count(x)
+  if x < 10i64
+    1i64
+  elsif x < 100i64
+    2i64
+  elsif x < 1_000i64
+    3i64
+  elsif x < 10_000i64
+    4i64
+  elsif x < 100_000i64
+    5i64
+  elsif x < 1_000_000i64
+    6i64
+  elsif x < 10_000_000i64
+    7i64
+  elsif x < 100_000_000i64
+    8i64
+  elsif x < 1_000_000_000i64
+    9i64
+  elsif x < 10_000_000_000i64
+    10i64
+  else
+    11i64
+  end
 end
 
 class Day2 < Day(Input)
