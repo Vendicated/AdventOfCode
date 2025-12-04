@@ -9,11 +9,21 @@ end
 
 day = "day#{ARGV[0] || Date.today.day}"
 
+commands = {
+    "cr" => "crystal",
+    "rb" => "ruby",
+    "v" => "v run"
+}
 
-if bench
-    system "crystal build --release solution.cr", :chdir => day
-    system "./solution", :chdir => day
-    system "hyperfine ./solution", :chdir => day
-else
-    system "crystal solution.cr", :chdir => day
+for ext, command in commands.entries do
+    filename = "solution.#{ext}"
+    next unless File.exist? "#{day}/#{filename}"
+
+    if bench and ext == "cr"
+        system "crystal build --release #{filename}", :chdir => day
+        system "./solution", :chdir => day
+        system "hyperfine ./solution", :chdir => day
+    else
+        system "#{command} #{filename}", :chdir => day
+    end
 end
