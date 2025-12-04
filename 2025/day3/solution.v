@@ -1,18 +1,15 @@
 import os
+import arrays
 
-fn ctoi(c rune) int {
-	if c < `0` || c > `9` {
-		panic('char not a number')
-	}
-
-	return u8(c - `0`)
+fn ctoi(c rune) u8 {
+	return c - `0`
 }
 
 fn find_largest(line string, start int, end int) (u8, int) {
 	mut largest := `0`
 	mut largest_idx := -1
 
-	for i := start; i < end; i++ {
+	for i in start .. end {
 		c := line[i]
 		if c > largest {
 			largest = c
@@ -20,21 +17,17 @@ fn find_largest(line string, start int, end int) (u8, int) {
 		}
 	}
 
-	if largest_idx == -1 {
-		panic('not found')
-	}
-
 	return largest, largest_idx
 }
 
 fn calc_joltage(line string, digits int) i64 {
 	mut joltage := i64(0)
-	mut idx := 0
+	mut idx := -1
 
 	for i in 0 .. digits {
-		digit, new_idx := find_largest(line, idx, line.len - (digits - i - 1))
+		mut digit := 0
+		digit, idx = find_largest(line, idx + 1, line.len - (digits - i - 1))
 		joltage = joltage * 10 + ctoi(digit)
-		idx = new_idx + 1
 	}
 
 	return joltage
@@ -43,15 +36,10 @@ fn calc_joltage(line string, digits int) i64 {
 fn solve(file string) ! {
 	lines := os.read_lines(file)!
 
-	mut total_output_joltage := i64(0)
-	mut total_output_joltage_p2 := i64(0)
+	p1 := arrays.sum(lines.map(calc_joltage(it, 2)))!
+	p2 := arrays.sum(lines.map(calc_joltage(it, 12)))!
 
-	for line in lines {
-		total_output_joltage += calc_joltage(line, 2)
-		total_output_joltage_p2 += calc_joltage(line, 12)
-	}
-
-	println('${file}:\nPart1: ${total_output_joltage}\nPart2: ${total_output_joltage_p2}')
+	println('${file}:\nPart1: ${p1}\nPart2: ${p2}')
 }
 
 fn main() {
