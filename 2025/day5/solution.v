@@ -8,6 +8,11 @@ struct Range {
 	end   i64
 }
 
+fn Range.parse(s string) !Range {
+	start, end := s.split_once('-') or { return error('failed to parse Range') }
+	return Range{strconv.atoi64(start)!, strconv.atoi64(end)!}
+}
+
 fn (self Range) contains(v i64) bool {
 	return v >= self.start && v <= self.end
 }
@@ -21,17 +26,8 @@ fn solve(file string) ! {
 
 	ranges_section, ids_sections := input.split_once('\n\n') or { panic('invalid input') }
 
-	mut ranges := []Range{}
+	mut ranges := ranges_section.split_into_lines().map(Range.parse(it)!)
 	ids := string(ids_sections).split_into_lines().map(strconv.atoi64(it)!)
-
-	lines: for line in ranges_section.split_into_lines() {
-		left, right := line.split_once('-') or { panic('invalid input') }
-
-		mut start, end := strconv.atoi64(left)!, strconv.atoi64(right)!
-		mut new_range := Range{start, end}
-
-		ranges << new_range
-	}
 
 	// deduplicate ranges
 	outer: for i := ranges.len - 1; i > 0; i-- {
@@ -70,7 +66,6 @@ fn solve(file string) ! {
 	fresh_count := ids.count(fn [ranges] (id i64) bool {
 		return ranges.any(it.contains(id))
 	})
-
 	fresh_ingredient_total := arrays.sum(ranges.map(it.end - it.start + 1))!
 
 	println('${file}:\nPart 1: ${fresh_count}\nPart 2: ${fresh_ingredient_total}')
