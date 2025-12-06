@@ -20,8 +20,15 @@ abstract class Day(T)
   abstract def part1(input : T) : Printable
   abstract def part2(input : T) : Printable
 
+  @enable_debug = true
+
+  def dbg(*args)
+    puts *args if @enable_debug
+  end
+
   def initialize
     run "example.txt"
+    @enable_debug = false
     run "input.txt"
   end
 
