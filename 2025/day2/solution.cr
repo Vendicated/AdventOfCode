@@ -29,6 +29,26 @@ def digit_count(x)
   end
 end
 
+def each_chunk_size(digits : Int64, &)
+  case digits
+  when 2, 3, 5, 7, 11
+    yield 1
+  when 4
+    yield 2
+  when 6
+    yield 2
+    yield 3
+  when 8
+    yield 2
+    yield 4
+  when 9
+    yield 3
+  when 10
+    yield 2
+    yield 5
+  end
+end
+
 class Day2 < Day(Input)
   def parse_input(lines : Array(String)) : Input
     lines.flat_map &.strip(',').strip.split(',')
@@ -66,15 +86,12 @@ class Day2 < Day(Input)
       (start..finish).each do |n|
         digits = digit_count n
 
-        (1i64..digits // 2i64).each do |i|
-          next if digits % i != 0i64
-          times_included = digits // i
-
-          divisor = 10i64 ** i
+        each_chunk_size digits do |chunk_size|
+          divisor = 10i64 ** chunk_size
           rest, left = n.divmod(divisor)
 
           is_symmetric = true
-          (times_included - 1i64).times do
+          (digits // chunk_size - 1i64).times do
             rest, x = rest.divmod(divisor)
             if x != left
               is_symmetric = false
