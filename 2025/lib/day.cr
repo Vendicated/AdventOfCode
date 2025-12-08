@@ -14,25 +14,29 @@ def format_time_span(span : Time::Span)
   end
 end
 
-abstract class Day(T)
+abstract class BaseDay(T)
   abstract def parse_input(lines : Array(String)) : T
 
-  abstract def part1(input : T) : Printable
-  abstract def part2(input : T) : Printable
-
-  @enable_debug = true
+  @is_example = true
 
   def dbg(*args)
-    puts *args if @enable_debug
+    puts *args if @is_example
   end
 
   def initialize
-    run "example.txt"
-    @enable_debug = false
-    run "input.txt"
+    _run "example.txt"
+    @is_example = false
+    _run "input.txt"
   end
 
-  private def run(file : String)
+  abstract def _run(file : String)
+end
+
+abstract class Day(T) < BaseDay(T)
+  abstract def part1(input : T) : Printable
+  abstract def part2(input : T) : Printable
+
+  private def _run(file : String)
     input = parse_input(File.read_lines file)
     input2 = input.clone
 
@@ -49,5 +53,23 @@ abstract class Day(T)
     puts "#{file}:"
     puts "Part 1: #{solution1} (#{format_time_span elapsed1})"
     puts "Part 2: #{solution2} (#{format_time_span elapsed2})"
+  end
+end
+
+abstract class DaySingle(T) < BaseDay(T)
+  abstract def run(input : T) : Tuple(Printable, Printable)
+
+  private def _run(file : String)
+    input = parse_input(File.read_lines file)
+
+    solution1, solution2 = nil, nil
+
+    elapsed = Time.measure do
+      solution1, solution2 = run(input)
+    end
+
+    puts "#{file}: (#{format_time_span elapsed})"
+    puts "Part 1: #{solution1} "
+    puts "Part 2: #{solution2} "
   end
 end
