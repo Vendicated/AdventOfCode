@@ -21,11 +21,20 @@ class Day8 < DaySingle(Input)
   def run(input) : {Printable, Printable}
     pairs = [] of Pair
 
+    shortest_distance = Int32::MAX
     input.each_combination(2) do |pair|
-      pairs << Pair.new pair[0], pair[1], pair[0].distance(pair[1])
+      distance = pair[0].distance(pair[1])
+      # Don't consider distances that are too large
+      if distance < shortest_distance
+        shortest_distance = distance
+      elsif distance > shortest_distance * 20
+        next
+      end
+
+      pairs << Pair.new pair[0], pair[1], distance
     end
 
-    pairs.sort_by! &.distance
+    pairs.unstable_sort! { |a, b| a.distance <=> b.distance }
 
     n = @is_example ? 10 : 1000
 
