@@ -22,8 +22,9 @@ class Day8 < DaySingle(Input)
     pairs = [] of Pair
 
     shortest_distance = Int32::MAX
-    input.each_combination(2) do |pair|
-      distance = pair[0].distance(pair[1])
+    input.each_combination(2, true) do |pair|
+      p1, p2 = pair.unsafe_fetch(0), pair.unsafe_fetch(1)
+      distance = p1.distance(p2)
       # Don't consider distances that are too large
       if distance < shortest_distance
         shortest_distance = distance
@@ -31,7 +32,7 @@ class Day8 < DaySingle(Input)
         next
       end
 
-      pairs << Pair.new pair[0], pair[1], distance
+      pairs << Pair.new p1, p2, distance
     end
 
     pairs.unstable_sort! { |a, b| a.distance <=> b.distance }
@@ -50,13 +51,13 @@ class Day8 < DaySingle(Input)
         circuits << [pair.p1, pair.p2]
       elsif !c1.nil? && !c2.nil?
         if c1 != c2
-          circuits[c1].concat circuits[c2]
+          circuits.unsafe_fetch(c1).concat circuits.unsafe_fetch(c2)
           circuits.delete_at c2
         end
       elsif !c1.nil?
-        circuits[c1] << pair.p2
+        circuits.unsafe_fetch(c1) << pair.p2
       else
-        circuits[c2.not_nil!] << pair.p1
+        circuits.unsafe_fetch(c2.not_nil!) << pair.p1
       end
 
       i += 1
@@ -64,7 +65,7 @@ class Day8 < DaySingle(Input)
         p1 = circuits.sort_by!(&.size).last(3).product(&.size)
       end
 
-      if circuits.size == 1 && circuits[0].size == input.size
+      if circuits.size == 1 && circuits.unsafe_fetch(0).size == input.size
         p2 = pair.p1.x * pair.p2.x
         break
       end
